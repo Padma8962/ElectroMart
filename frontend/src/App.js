@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './index.css';
 
+import HomePage         from './pages/HomePage';
 import UserLoginPage    from './pages/UserLoginPage';
 import AdminLoginPage   from './pages/AdminLoginPage';
 import UserDashboard    from './pages/UserDashboard';
@@ -33,7 +34,7 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Default route */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<HomePage darkMode={darkMode} toggleDark={toggleDark} />} />
 
       {/* Auth */}
       <Route path="/login"        element={<UserLoginPage />} />
@@ -74,7 +75,7 @@ function AppRoutes() {
       } />
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
