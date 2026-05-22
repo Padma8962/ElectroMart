@@ -7,15 +7,24 @@ export default function AdminLoginPage() {
   const [isSignup, setIsSignup] = useState(false);
   const [form, setForm] = useState({ fullName: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const toggleMode = e => {
+    e.preventDefault();
+    setIsSignup(!isSignup);
+    setError('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsSubmitting(true);
     try {
+      localStorage.removeItem('em_token');
+      localStorage.removeItem('em_user');
       const res = await (isSignup
         ? registerAdmin(form)
         : loginAdmin({ email: form.email, password: form.password }));
@@ -24,6 +33,8 @@ export default function AdminLoginPage() {
       navigate('/admin/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -75,19 +86,20 @@ export default function AdminLoginPage() {
                 placeholder="Password"
                 name="password"
                 type="password"
+                minLength={6}
                 value={form.password}
                 onChange={handleChange}
                 required
               />
             </div>
-            <button type="submit" className="btn-primary">
-              {isSignup ? 'Sign Up' : 'Login'}
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? 'Please wait...' : (isSignup ? 'Sign Up' : 'Login')}
             </button>
           </form>
 
           <p className="auth-link">
             {isSignup ? 'Already have an account? ' : 'New here? '}
-            <a href="#" onClick={e => { e.preventDefault(); setIsSignup(!isSignup); setError(''); }}>
+            <a href="#" onClick={toggleMode}>
               {isSignup ? 'Login' : 'Signup'}
             </a>
           </p>
