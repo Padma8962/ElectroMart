@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: electromart-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    autoDeployTrigger: commit
