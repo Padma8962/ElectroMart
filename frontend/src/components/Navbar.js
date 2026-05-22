@@ -52,11 +52,11 @@ export default function Navbar({ darkMode, toggleDark, cartCount = 0 }) {
 
   const handleCart = () => navigate('/cart');
   const handleProfile = () => navigate(isAdmin ? '/admin/profile' : '/profile');
-  const handleHome = () => navigate('/');
+  const handleHome = () => navigate('/', { replace: false });
 
   return (
     <nav className="navbar">
-      <button className="navbar-brand navbar-brand-btn" onClick={handleHome}>
+      <button type="button" className="navbar-brand navbar-brand-btn" onClick={handleHome} aria-label="Go to ElectroMart home page">
         ElectroMart
       </button>
       <div className="navbar-right">

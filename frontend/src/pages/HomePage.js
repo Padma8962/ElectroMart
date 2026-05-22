@@ -13,7 +13,7 @@ export default function HomePage({ darkMode, toggleDark }) {
   return (
     <div className="home-page">
       <nav className="home-navbar">
-        <button className="navbar-brand home-brand" onClick={() => navigate('/')}>
+        <button type="button" className="navbar-brand home-brand" onClick={() => navigate('/')} aria-label="Go to ElectroMart home page">
           ElectroMart
         </button>
         <div className="home-nav-actions">

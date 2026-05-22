@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://electromart-2-e3c1.onrender.com';
+export const API_ORIGIN = (process.env.REACT_APP_API_URL || 'https://electromart-2-e3c1.onrender.com').replace(/\/$/, '');
+const BASE_URL = `${API_ORIGIN}/api`;
 
 const api = axios.create({ baseURL: BASE_URL });
 

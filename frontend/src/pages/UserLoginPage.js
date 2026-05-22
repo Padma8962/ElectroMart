@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { loginUser, registerUser } from '../services/api';
 
 export default function UserLoginPage() {
   const [isSignup, setIsSignup] = useState(false);
@@ -15,18 +16,11 @@ export default function UserLoginPage() {
     e.preventDefault();
     setError('');
     try {
-      // Simulate API call — swap with real API when backend is running
-      // const res = await (isSignup ? registerUser(form) : loginUser({ email: form.email, password: form.password }));
-      // login(res.data.user, res.data.token);
-
-      // Demo mode: accept any credentials
-      const mockUser = {
-        userId: 1,
-        fullName: form.fullName || form.email.split('@')[0],
-        email: form.email,
-        role: 'USER'
-      };
-      login(mockUser, 'mock-jwt-token-user');
+      const res = await (isSignup
+        ? registerUser(form)
+        : loginUser({ email: form.email, password: form.password }));
+      const { token, ...userData } = res.data;
+      login(userData, token);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
