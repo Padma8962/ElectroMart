@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8081/api';
+const BASE_URL = 'https://electromart-2-e3c1.onrender.com';
 
 const api = axios.create({ baseURL: BASE_URL });
 
