@@ -35,8 +35,8 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Value("${app.cors.allowed-origins}")
-    private String allowedOrigins;
+    @Value("${app.cors.allowed-origin-patterns}")
+    private String allowedOriginPatterns;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -81,7 +81,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.stream(allowedOrigins.split(","))
+        config.setAllowedOriginPatterns(Arrays.stream(allowedOriginPatterns.split(","))
                 .map(String::trim)
                 .filter(origin -> !origin.isEmpty())
                 .collect(Collectors.toList()));
